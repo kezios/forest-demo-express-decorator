@@ -1,10 +1,10 @@
-const express = require('express');
+import * as express from 'express';
+import { PermissionMiddlewareCreator, RecordsGetter } from "forest-express-sequelize";
+
 const router = express.Router();
-const Liana  = require('forest-express-sequelize');
+const permissionMiddlewareCreator = new PermissionMiddlewareCreator('customers');
 
-const permissionMiddlewareCreator = new Liana.PermissionMiddlewareCreator('customers');
-
-router.post('/actions/generate-invoice', Liana.ensureAuthenticated, (req, res) => {
+router.post('/customers/actions/generate-invoice', permissionMiddlewareCreator.list(), (req, res, next) => {
   let options = {
     root: __dirname + '/../public/',
     dotfiles: 'deny',
@@ -16,11 +16,12 @@ router.post('/actions/generate-invoice', Liana.ensureAuthenticated, (req, res) =
 
   let fileName = 'invoice-2342.pdf';
   res.sendFile(fileName, options, (error) => {
+    console.log('error', error)
     if (error) { next(error); }
   });
 });
 
-router.post('/actions/charge-credit-card', Liana.ensureAuthenticated, (req, res) => {
+router.post('/customers/actions/charge-credit-card', permissionMiddlewareCreator.list(), (req, res) => {
   res.send({
     html: `<p>Hello world: charge-credit-card</p>`
   });

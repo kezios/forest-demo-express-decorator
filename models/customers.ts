@@ -6,6 +6,7 @@ interface ICustomerAttributes {
   firstname: string | null;
   lastname: string | null;
   phone: string | null;
+  birthDay: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -14,6 +15,7 @@ interface ICustomerCreationAttributes {
   firstname: string | null;
   lastname: string | null;
   phone: string | null;
+  birthDay: string;
 }
 
 export class Customer extends Model<ICustomerAttributes, ICustomerCreationAttributes> {
@@ -21,6 +23,7 @@ export class Customer extends Model<ICustomerAttributes, ICustomerCreationAttrib
   public firstname!: string | null;
   public lastname!: string | null;
   public phone!: string | null;
+  public birthDay: string;
   public createdAt!: Date;
   public updatedAt!: Date;
 
@@ -48,6 +51,9 @@ export default function(sequelize: Sequelize, dataTypes: typeof DataTypes): type
       type: DataTypes.STRING,
       allowNull: true,
     },
+    birthDay: {
+      type: DataTypes.DATE,
+    }
   },{
     tableName: 'customers',
     underscored: true,

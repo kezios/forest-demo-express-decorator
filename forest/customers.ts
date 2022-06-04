@@ -1,14 +1,17 @@
+import { Address } from "../models/addresses";
+import { Customer } from "../models/customers";
+
 const Liana = require('forest-express-sequelize');
-const models = require('../models/');
-const _ = require('lodash');
 
 Liana.collection('customers', {
   actions: [{
     name: 'Generate invoice',
-    download: true
+    download: true,
+    endpoint: '/forest/customers/actions/generate-invoice'
   }, {
     name: 'Charge credit card',
     type: 'single',
+    endpoint: '/forest/customers/actions/charge-credit-card',
     fields: [{
       field: 'amount',
       isRequired: true,
@@ -24,10 +27,10 @@ Liana.collection('customers', {
   fields: [{
     field: 'fullname',
     type: 'String',
-    get: (customer) => {
+    get: (customer: Customer): string => {
       return customer.firstname + ' ' + customer.lastname;
     },
-    set: (customer, fullname) => {
+    set: (customer: Customer, fullname: string): Customer => {
       let names = fullname.split(' ');
       customer.firstname = names[0];
       customer.lastname = names[1];
@@ -35,35 +38,23 @@ Liana.collection('customers', {
       // Don't forget to return the customer.
       return customer;
     },
-    search: function (query, search) {
-      let s = models.sequelize;
-      let split = search.split(' ');
-
-      var searchCondition = s.and(
-        { firstname: { $ilike: split[0] }},
-        { lastname: { $ilike: split[1] }}
-      );
-
-      let searchConditions = _.find(query.where.$and, '$or');
-      searchConditions.$or.push(searchCondition);
-    }
   }, {
     field: 'full_address',
     type: 'String',
-    get: (customer) => {
-      return models.addresses
+    get: (customer: Customer) => {
+      return Address
         .findOne({ where: { customer_id: customer.id } })
         .then((address) => {
           return address.address_line_1 + '\n' +
             address.address_line_2 + '\n' +
-            address.address_city + address.country;
+            address.address_line_city + address.country;
         });
     }
   }, {
     field: 'age',
     type: 'Number',
-    get: (customer) => {
-      let diff = new Date() - new Date(customer.birth_date);
+    get: (customer: Customer): number => {
+      let diff = Date.now() - new Date(customer.birthDay).getTime();
       return Math.floor(diff / 31557600000); // Divide by 1000*60*60*24*365.25
     }
   }]
