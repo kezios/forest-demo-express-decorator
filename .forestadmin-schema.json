@@ -10,7 +10,7 @@
     "onlyForRelationships": false,
     "paginationType": "page",
     "fields": [{
-      "field": "address_city",
+      "field": "addressCity",
       "type": "String",
       "defaultValue": null,
       "enums": null,
@@ -109,7 +109,7 @@
       "isFilterable": true,
       "isPrimaryKey": true,
       "isReadOnly": false,
-      "isRequired": false,
+      "isRequired": true,
       "isSortable": true,
       "isVirtual": false,
       "reference": null,
@@ -243,7 +243,7 @@
       "isFilterable": true,
       "isPrimaryKey": true,
       "isReadOnly": false,
-      "isRequired": false,
+      "isRequired": true,
       "isSortable": true,
       "isVirtual": false,
       "reference": null,
@@ -266,21 +266,6 @@
       "validations": []
     }, {
       "field": "phone",
-      "type": "String",
-      "defaultValue": null,
-      "enums": null,
-      "integration": null,
-      "isFilterable": true,
-      "isPrimaryKey": false,
-      "isReadOnly": false,
-      "isRequired": false,
-      "isSortable": true,
-      "isVirtual": false,
-      "reference": null,
-      "inverseOf": null,
-      "validations": []
-    }, {
-      "field": "stripe_id",
       "type": "String",
       "defaultValue": null,
       "enums": null,

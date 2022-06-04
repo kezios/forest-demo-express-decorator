@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "pretty": true,
+    "sourceMap": false,
+    "target": "es2017",
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "types": [
+      "node",
+      "express",
+      "forest-express-sequelize",
+      "sequelize"
+    ],
+    "allowJs": true
+  },
+  "include": [
+    "./**/*",
+    ".env"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
